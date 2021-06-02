@@ -18,6 +18,9 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: get commit message
+        run: |
+           echo ::set-env name=commitmsg::$(git log -1 --pretty=format:"%s")
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
