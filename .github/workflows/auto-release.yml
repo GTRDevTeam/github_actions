@@ -21,7 +21,7 @@ jobs:
       - name: get commit message
         id: commits
         run: |
-           echo ::set-output name=commitmsg::$(git log -1 --pretty=format:"%s")
+           echo "::set-output name=commitmsg::$(git log --graph --abbrev-commit --decorate  --first-parent ${{ github.head_ref }})"
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
