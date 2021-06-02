@@ -20,7 +20,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           tag_name: ${{ github.ref }}
-          release_name:  (${{ steps.date.outputs.date }}) ${{ github.event.pull_request.head }}
-          body: ${{ github.event.pull_request }}
+          release_name: ${{ github.event.pull_request.head }}
+          body: ${{ github.event.pull_request }} |
+            ${{ commits }}
+            ${{ sender }}
           draft: false
           prerelease: false
