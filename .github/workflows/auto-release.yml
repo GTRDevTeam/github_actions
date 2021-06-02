@@ -20,8 +20,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: get commit message
         id: commits
-        run: |
-           echo "::set-output name=commitmsg::$(git log -1 --pretty=format:\"%s\")"
+        run: echo "::set-output name=commitmsg::$(git log ${{ github.head_ref }} --no-merges --oneline)"
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
@@ -34,6 +33,6 @@ jobs:
           release_name: ${{ github.event.pull_request.head.ref  }}(${{ steps.date.outputs.date }})
           body: |
             ${{ github.event.pull_request.body }}
-            Merge commit : ${{ steps.commits.output.commitmsg }}
+            commit : ${{ steps.commits.output.commitmsg }}
           draft: false
           prerelease: false
