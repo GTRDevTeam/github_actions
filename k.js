@@ -624,4 +624,4 @@ o = {
   env: "/home/runner/work/_temp/_runner_file_commands/set_env_b91ba682-fc29-4756-99a6-d521adf8cd24",
 }
 
-console.log(o.event.pull_request._links.commits.href)
+console.log(o.event.pull_request._links.commits)
