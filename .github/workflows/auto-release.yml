@@ -21,7 +21,7 @@ jobs:
       - name: get commit message
         id: commits
         run: |
-           echo "::set-output name=commitmsg::$(git log --graph --abbrev-commit --decorate  --first-parent ${{ github.head_ref }})"
+           echo "::set-output name=commitmsg::$(git log -1 --pretty=format:\"%s\")"
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Create Release
@@ -34,6 +34,6 @@ jobs:
           release_name: ${{ github.event.pull_request.head.ref  }}(${{ steps.date.outputs.date }})
           body: |
             ${{ github.event.pull_request.body }}
-            Commits : ${{ steps.commits.output.commitmsg }}
+            Merge commit : ${{ steps.commits.output.commitmsg }}
           draft: false
           prerelease: false
