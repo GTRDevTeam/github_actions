@@ -1,5 +1,8 @@
 on:
   push:
+    branches:
+      - main
+      - master
 
 name: Create Release
 
@@ -8,6 +11,9 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
+      - name: log recent branch name
+        uses: tonynguyenit18/github-action-custom-vars@v1
+        run: echo $RECENT_MERGED_BRANCH_NAME
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
@@ -20,9 +26,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.event.pull_request.head }}
-          body: ${{ github.event.pull_request }} |
-            ${{ commits }}
-            ${{ sender }}
+          release_name: ${{ $RECENT_MERGED_BRANCH_NAME }}(${{ steps.date.outputs.date }})
+          body: ${{ github.event.head_commit.message }} |
+            ${{ github.event.commits }}
+            By ${{ github.event.pusher.name }}
           draft: false
           prerelease: false
