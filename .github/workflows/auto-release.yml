@@ -1,19 +1,20 @@
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
-      - main
       - master
+      - main
 
 name: Create Release
 
 jobs:
-  build:
-    name: Create Release
+  job1:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
-      - name: log recent branch name
-        uses: tonynguyenit18/github-action-custom-vars@v1
-        run: echo $RECENT_MERGED_BRANCH_NAME
+      - name: get branch name
+        id: branch_name
+        run: echo 
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
@@ -25,10 +26,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ $RECENT_MERGED_BRANCH_NAME }}(${{ steps.date.outputs.date }})
-          body: ${{ github.event.head_commit.message }} |
-            ${{ github.event.commits }}
-            By ${{ github.event.pusher.name }}
+          tag_name: ${{ github.event.pull_reuest.head }}
+          release_name: ${{ github.event.pull_reuest.head  }}(${{ steps.date.outputs.date }})
+          body: ${{ toJson(github) }}
           draft: false
           prerelease: false
