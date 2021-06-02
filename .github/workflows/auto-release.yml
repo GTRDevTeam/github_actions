@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: get branch name
         id: branch_name
         run: echo 
@@ -21,8 +23,6 @@ jobs:
       - name: get commit message
         id: commits
         run: echo "::set-output name=commitmsg::$(git log ${{github.event.head.repo.default_branch}}..${{ github.head_ref }} --no-merges --oneline)"
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
