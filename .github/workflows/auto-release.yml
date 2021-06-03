@@ -39,7 +39,9 @@ jobs:
           tag_name: MR${{ github.event.number }}
           release_name: ${{ github.event.pull_request.head.ref  }}(${{ steps.date.outputs.date }})
           body: |
-            ${{ github.event.pull_request.body }}
-            commits : ${{ steps.commits.outputs.commits }}
+            ${{ github.event.pull_request.body }}  
+            ***  
+            ## commits : 
+            ${{ steps.commits.outputs.commits }}
           draft: false
           prerelease: false
