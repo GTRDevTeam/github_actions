@@ -23,7 +23,7 @@ jobs:
         # run: git fetch && echo "::set-output name=commitmsg::$(git log origin/${{github.event.repository.default_branch}}..${{ github.head_ref }} --no-merges --oneline)"
         run: | 
           git fetch 
-          commits = "$(git log --no-merges --no-decorate -n 1)""
+          commits = "$(git log --no-merges --no-decorate -n 1)"
           commits="${commits//'%'/'%25'}"
           commits="${commits//$'\n'/'%0A'}"
           commits="${commits//$'\r'/'%0D'}"
@@ -41,6 +41,6 @@ jobs:
           release_name: ${{ github.event.pull_request.head.ref  }}(${{ steps.date.outputs.date }})
           body: |
             ${{ github.event.pull_request.body }}
-            commits : ${{ steps.commits.output.commits }}
+            commits : ${{ steps.commits.outputs.commits }}
           draft: false
           prerelease: false
