@@ -20,7 +20,6 @@ jobs:
           fetch-depth: 0
       - name: Fetch commits
         id: commits
-        # run: git fetch && echo "::set-output name=commitmsg::$(git log origin/${{github.event.repository.default_branch}}..${{ github.head_ref }} --no-merges --oneline)"
         run: | 
           git fetch 
           COMMITS="$(git log --no-merges --no-decorate -n ${{ github.event.pull_request.commits }})"
